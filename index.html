@@ -50,13 +50,13 @@ function step(){
    S.w+=com*.00015+S.lean*(n*.0007-.012)-acc*.014*(.5+n*.1);S.w*=.97;S.lean+=S.w;
    if(Math.abs(S.lean)>.7){for(let i=0;i<n;i++){const p=stackPos(i);S.parts.push({x:p.x,y:p.y,vx:Math.random()*10-5,vy:-Math.random()*6,l:50,col:'#2a1a10'})}
     S.stack=[];S.lean=S.w=0;S.msg='CRASH!';S.mt=40;say('Ah, 10 more will do.');hurt()}}
-  if(--S.spawn<=0){S.spawn=Math.max(48,110-S.round*6);S.fall.push({x:50+Math.random()*300,y:-30,v:1.5+S.round*.22+Math.random()*.4,m:0})}
+  if(--S.spawn<=0){S.spawn=Math.max(55,125-S.round*6);S.fall.push({x:50+Math.random()*300,y:-30,v:1.3+S.round*.2+Math.random()*.4,m:0})}
   S.fall=S.fall.filter(p=>{
    p.y+=p.v;const n=S.stack.length,tY=HAT-n*PH*Math.cos(S.lean);
    if(!p.m&&p.y+PH/2>=tY){
     const tx=n?stackPos(n-1).x:S.px;
-    if(Math.abs(p.x-tx)<38){const off=Math.max(-14,Math.min(14,p.x-tx));S.stack.push(off);S.w+=off*.004;S.score+=10*S.stack.length;if(S.stack.length<10&&(!S.say||S.say.l<=0)&&Math.random()<.45)say(Q[Math.random()*Q.length|0]);
-     if(S.stack.length>=10){S.mode='down';S.dt=0;S.fall=[];say('Drinking my feelings away…',140)}
+    if(Math.abs(p.x-tx)<48){const off=Math.max(-14,Math.min(14,p.x-tx));S.stack.push(off);S.w+=off*.004;S.score+=10*S.stack.length;if(S.stack.length<5&&(!S.say||S.say.l<=0)&&Math.random()<.45)say(Q[Math.random()*Q.length|0]);
+     if(S.stack.length>=5){S.mode='down';S.dt=0;S.fall=[];say('Drinking my feelings away…',140)}
      return false}
     p.m=1}
    if(p.y>H+20){hurt();S.msg='SPILT!';S.mt=30;return false}
@@ -136,7 +136,7 @@ function draw(){
  if(rage){g.fillStyle='rgba(180,20,20,.18)';g.fillRect(0,0,W,H)}
  niall(rage,down);
  if(S.mode==='pints'||down){
-  const n=S.stack.length,show=down?10-Math.floor(S.dt/15):n;
+  const n=S.stack.length,show=down?5-Math.floor(S.dt/30):n;
   if(down){for(let i=0;i<Math.max(0,show);i++)pint(S.px+Math.sin(-.3)*i*PH*.5+10,HAT-(i+.5)*PH,-.3)}
   else for(let i=0;i<n;i++){const p=stackPos(i);pint(p.x,p.y,S.lean)}
  }
@@ -148,7 +148,7 @@ function draw(){
  g.textAlign='left';g.fillStyle='#fff';g.font='bold 16px system-ui,sans-serif';
  g.fillText('Score '+S.score,12,26);g.textAlign='right';g.fillText('♥'.repeat(Math.max(0,S.lives)),W-12,26);
  g.textAlign='center';g.font='13px system-ui,sans-serif';
- if(S.mode==='pints')g.fillText('Pints '+S.stack.length+'/10 · Round '+S.round,W/2,26);
+ if(S.mode==='pints')g.fillText('Pints '+S.stack.length+'/5 · Round '+S.round,W/2,26);
  if(rage)g.fillText('Timber! '+Math.ceil((600-S.rt)/60)+'s',W/2,26);
  if(S.say&&S.say.l>0&&S.mode!=='menu'){g.font='bold 15px system-ui,sans-serif';const w=g.measureText(S.say.t).width+26;g.fillStyle='#fff';g.beginPath();g.roundRect(W/2-w/2,40,w,32,10);g.fill();g.fillStyle='#111';g.textAlign='center';g.fillText(S.say.t,W/2,61)}
  g.font='bold 26px system-ui,sans-serif';
@@ -161,7 +161,7 @@ function draw(){
   g.font='16px system-ui,sans-serif';
   if(S.mode==='over'){g.fillText('Score '+S.score+' · Best '+S.best,W/2,230)}
   else{g.fillText('Half man, half fish, all ESB.',W/2,225)}
-  ['Slide to move Niall and catch the pints','on his hard hat. Keep the stack balanced!','Stack 10 and he downs the lot…','then goes mad and wants to cut timber.'].forEach((t,i)=>g.fillText(t,W/2,290+i*24));
+  ['Slide to move Niall and catch the pints','on his hard hat. Keep the stack balanced!','Stack 5 and he downs the lot…','then goes mad and wants to cut timber.'].forEach((t,i)=>g.fillText(t,W/2,290+i*24));
   g.font='bold 20px system-ui,sans-serif';g.fillStyle='#cfe03a';g.fillText('Tap to '+(S.mode==='over'?'go again':'start'),W/2,430)}
 }
 (function loop(){step();draw();requestAnimationFrame(loop)})();
