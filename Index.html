@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Niall’s Pint Stacker</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#10151c}
+html,body{height:100%;margin:0;background:var(--bg)}
+body{display:flex;justify-content:center;align-items:center;overflow:hidden}
+canvas{height:100%;max-width:100%;aspect-ratio:400/640;touch-action:none;display:block}
+</style></head><body>
+<canvas id="c" width="400" height="640"></canvas>
+<script>
+const c=document.getElementById('c'),g=c.getContext('2d'),W=400,H=640,PH=24,HAT=H-236;
+const spots=Array.from({length:34},(_,i)=>({a:Math.random()*6.28,r:Math.random(),y:Math.random()}));
+let S,keys={};
+const Q=['Ah, 10 more will do.','Drinking my feelings away…','I’m the best PICW.','Another one, lads!','Steady now…'];
+function say(t,l){if(S)S.say={t,l:l||120}}
+const HEAD=new Image();HEAD.src='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCABfAFoDASIAAhEBAxEB/8QAGwAAAQUBAQAAAAAAAAAAAAAAAwECBAUGAAf/xAAyEAACAQMDAwMCBQIHAAAAAAABAgMABBEFEiETMUEiUWFxkQYjMoGhBxRCUmJyscHR/8QAGgEAAwEBAQEAAAAAAAAAAAAAAQIDAAQFBv/EACARAAMBAAICAgMAAAAAAAAAAAABAhEhMQMSBBMiMmH/2gAMAwEAAhEDEQA/ANKRiuwaMQDSOVjjZj4FXJkO5uVtx7sfFVk2oyZ70G+nJlYk5NQS+fAooDJr3buuCe5rjcNsIqEH57Cnb6bAFks4JHirG2vcqFk5x/iFZ4SfNGjmPg81sMahWDKGByDSGqqzvtqqrEkDuKtAQwBU5B7GkCITSZNONNrGCBqi6hLthxmjMwVSzHAFU2p3QfdGMj5rBKmaUOSfmgh6WVWH6RuHkihA0yFYdcuwVRyaQiROWUgUAzFCCpII9qeLxmjKkggjHIqi9cIv20f1KVJMMOajpJEJCZULA+xxiir0Wx0pcN4DDtU2ys/0mxTN7/vV1pc5eJkOfTyKzgJGCcfXNWulSHrfUYpd1D9F2WpN1NptYALXr2LTdO/uJg+wuFJUZxn3rL6jqlnG533CknnC8n+K034ptpLr8M3scSF32BgoGScEGvMorGWReswwgfaV85/6papoZTpcnVLc+odQfJGKZJrEAX1AyexA7VKjsFePay9vBoJ0uMdh+xpfsY/1gBf2Mw7uhP8AFOVYnC9O6TJHO7jmmtpynI2D6VGl04rym5PoaC8jN9ZLkSePOULKPK8ihLcLnDZDexqGpvbc/lSZHt2ow1NiNl5bhv8AUF5p15EI4ZZQOG53Ve6OcyoM8lqzluLaXAjd4STxnkGtFokXRuoy0u9f9pFPuimh2V3TqQEFdtFAxWfizUX03QpJYXKSuwRCO+TXn+iLM5kLE7ZjuyfJFa3+oce/SrRwcxrcerHPcVmNIhZrpW37VBzjweKlZ0eKdWl9bR4RiT966UKgLE59hRIwRgdhSTxCRNu7HyO9SZb14Ku4lnHqMQ2j2oCX0Lgq3pb2NPu7EgEiWcn3D1Xi0m6uSXK+7CsLjTJ0kILgjGKj3NqjoMfxR9SjkhsEmiLZOARVVHcSFgskjR58OOPvR5BSEuI2tLbqhzksAAa034Pmv5XC3dtJ0chkmKkD6c96HZaadQtl6sSzPG4CRns4PBP7DJrcWtusNnBCpYrGiqu8c8Dz81aNw56zR+40mTTimKTFOIefa5bvZyvEztJbt+l8cZ9j80OxuITjftBXlceTWnnjDF4p0wjcAkZBHsaqbn8PQcmENG3f8s8fY1wz8maX5F5bnokRvlM5z8124diePioUVvc24MZYuPAZSp/8ocjXEcrGVSgAyoPmn1PourRMmdNvB5qJAevOyDsp5NV73jyOUQfU+1J1pLQ5glxuILHbnNE3si/vreNrcow9IxkVBi09Qw9W6P8AykZqKuqyzIxC5ypB5qXp9yXXGfFbQtpl1oAxqNwAPy7eJUX6tyf4Aq/Mpqs0WHbbSy45llLfYAD/AIqy6TEZFdE9HFf7CGQ
